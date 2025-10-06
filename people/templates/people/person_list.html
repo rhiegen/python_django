@@ -1,0 +1,43 @@
+{% extends "people/base.html" %}
+{% block content %}
+<header>
+  <h1>People</h1>
+  <div>
+    <a class="button" href="{% url 'person_create' %}">Create Person</a>
+  </div>
+</header>
+<form class="inline" method="get" action="">
+  <input type="search" name="q" value="{{ query }}" placeholder="Search by name or age" />
+  <input type="submit" value="Search" />
+  {% if query %}
+    <a class="button" href="{% url 'person_list' %}">Clear</a>
+  {% endif %}
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Date of Birth</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in people %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.age }}</td>
+      <td>{{ p.date_of_birth|date:"d/m/Y" }}</td>
+      <td class="actions">
+        <a class="button" href="{% url 'person_update' p.id %}">Update</a>
+        <a class="button" href="{% url 'person_delete' p.id %}">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="muted">No people found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
