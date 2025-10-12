@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic HTML Page</title>
+</head>
+<body>
+    <h1>Bem-vindo {{nome}} aqui estão suas tarefas</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Data de Criação</th>
+            <th>Situação</th>
+        </tr>
+        {% for tarefa in tarefas %}
+        <tr>
+            <td>{{ tarefa.id }}</td>
+            <td>{{ tarefa.nome }}</td>
+            <td>{{ tarefa.descricao }}</td>
+            <td>{{ tarefa.data_criacao }}</td>
+            <td>{% if tarefa.concluida %}Completo{% else %}Pendente{% endif %}</td>
+            <td><a href="{% url 'tarefas:editar' tarefa.id %}">Editar</a></td>
+            <td><a href="{% url 'tarefas:remover' tarefa.id %}">Remover</a></td>    
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhuma tarefa encontrada.</td>
+        </tr>
+        {% endfor %}
+    <a href="{% url 'tarefas:adicionar' %}">Adicionar Tarefa</a>
+</body>
+</html>
